@@ -1,7 +1,8 @@
-import "./App.css"
+import "./styles.css";
+import TextEditor from "./components/TextEditor";
 
 function App() {
-    return <div>Hello world</div>
+  return <TextEditor />;
 }
 
-export default App
+export default App;
