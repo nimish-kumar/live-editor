@@ -11,9 +11,14 @@ const conn = new Server(8001, {
 });
 
 conn.on("connection", (socket) => {
-  socket.on("send-changes", (delta) => {
-    console.log(delta);
-    socket.broadcast.emit("receive-changes", delta);
+  socket.on("get-document", (id) => {
+    const data = "";
+    socket.join(id);
+    socket.emit("load-document", data);
+    socket.on("send-changes", (delta) => {
+      socket.broadcast.to(id).emit("receive-changes", delta, id);
+    });
   });
+
   // console.log("connected!");
 });
