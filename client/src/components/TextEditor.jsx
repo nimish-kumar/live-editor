@@ -1,6 +1,7 @@
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
-import { useState } from "react";
+import io from "socket.io-client";
+import { useEffect, useState } from "react";
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ font: [] }],
@@ -14,6 +15,13 @@ const TOOLBAR_OPTIONS = [
 ];
 export default function TextEditor() {
   const [value, setValue] = useState("");
+
+  useEffect(() => {
+    const socket = io("http://localhost:8001");
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <ReactQuill
