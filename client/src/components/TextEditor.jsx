@@ -24,7 +24,7 @@ export default function TextEditor() {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    const socket = io("http://localhost:8001");
+    const socket = io(import.meta.env.PROJ_DEPLOYED_SERVER_URL);
     const editor = quillRef.current.getEditor();
 
     const timer = setInterval(() => {

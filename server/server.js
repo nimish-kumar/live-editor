@@ -1,17 +1,18 @@
-import { config } from "dotenv";
+import dotenv from "dotenv";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
 import Document from "./dbDocument.js";
-config();
+
+dotenv.config({path: "../.env"});
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/editordb")
+  .connect(process.env.PROJ_DB_CONNECTION_STRING)
   .then(() => console.log("mongodb connected!"))
   .catch((err) => console.log("mongodb error", err));
 
-const conn = new Server(8001, {
+const conn = new Server(Number(process.env.PROJ_SERVER_PORT || "8081"), {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.PROJ_DEPLOYED_FRONTEND_URL,
     methods: ["GET", "POST"],
   },
 });
