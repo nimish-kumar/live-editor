@@ -11,5 +11,9 @@ const conn = new Server(8001, {
 });
 
 conn.on("connection", (socket) => {
-  console.log("connected!");
+  socket.on("send-changes", (delta) => {
+    console.log(delta);
+    socket.broadcast.emit("receive-changes", delta);
+  });
+  // console.log("connected!");
 });

@@ -2,6 +2,8 @@ import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
+import { useRef } from "react";
+
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ font: [] }],
@@ -14,21 +16,39 @@ const TOOLBAR_OPTIONS = [
   ["clean"],
 ];
 export default function TextEditor() {
+  const quillRef = useRef()
+  const [socket,setSocket] = useState();
+
   const [value, setValue] = useState("");
 
   useEffect(() => {
     const socket = io("http://localhost:8001");
+    setSocket(socket);
+
+    socket.on("receive-changes", delta => {
+      if (quillRef.current == null) return
+      quillRef.current?.getEditor()?.updateContents(delta)
+    })
+
     return () => {
       socket.disconnect();
+      socket.off("receive-changes")
     };
   }, []);
 
+  const changeHandler = (value, delta, source) => {
+    setValue(value)
+    if(socket == null) return
+    if(source!=="user") return
+    socket.emit("send-changes", delta)
+  }
   return (
     <ReactQuill
       theme="snow"
       value={value}
-      onChange={setValue}
+      onChange={changeHandler}
       modules={{ toolbar: TOOLBAR_OPTIONS }}
+      ref = {(node) => quillRef.current = node}
     />
   );
 }
