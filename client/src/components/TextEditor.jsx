@@ -25,18 +25,22 @@ export default function TextEditor() {
 
   useEffect(() => {
     const socket = io("http://localhost:8001");
-    const editor = quillRef.current?.getEditor();
+    const editor = quillRef.current.getEditor();
 
-    editor?.disable();
-    editor?.setText("Loading...");
+    const timer = setInterval(() => {
+      socket.emit("save-document", editor.getContents());
+    }, 3000);
+
+    editor.disable();
+    editor.setText("Loading...");
     setSocket(socket);
 
-    socket.emit("get-document", id)
+    socket.emit("get-document", id);
 
     // load document
     const loadDocument = document => {
-      editor?.setContents(document);
-      editor?.enable();
+      editor.setContents(document);
+      editor.enable();
     };
     // once() cleans up itself when the
     socket.once("load-document", loadDocument);
@@ -49,6 +53,7 @@ export default function TextEditor() {
     socket.on("receive-changes", updateChangesWithDelta);
 
     return () => {
+      clearInterval(timer);
       socket.off("receive-changes", updateChangesWithDelta);
       socket.disconnect();
     };
