@@ -16,39 +16,39 @@ const TOOLBAR_OPTIONS = [
   ["clean"],
 ];
 export default function TextEditor() {
-  const quillRef = useRef()
-  const [socket,setSocket] = useState();
+  const quillRef = useRef();
+  const [socket, setSocket] = useState();
 
   const [value, setValue] = useState("");
 
   useEffect(() => {
     const socket = io("http://localhost:8001");
     setSocket(socket);
-
-    socket.on("receive-changes", delta => {
-      if (quillRef.current == null) return
-      quillRef.current?.getEditor()?.updateContents(delta)
-    })
+    const updateChangesWithDelta = delta => {
+      if (quillRef.current == null) return;
+      quillRef.current?.getEditor()?.updateContents(delta);
+    };
+    socket.on("receive-changes", updateChangesWithDelta);
 
     return () => {
+      socket.off("receive-changes", updateChangesWithDelta);
       socket.disconnect();
-      socket.off("receive-changes")
     };
   }, []);
 
   const changeHandler = (value, delta, source) => {
-    setValue(value)
-    if(socket == null) return
-    if(source!=="user") return
-    socket.emit("send-changes", delta)
-  }
+    setValue(value);
+    if (socket == null) return;
+    if (source !== "user") return;
+    socket.emit("send-changes", delta);
+  };
   return (
     <ReactQuill
       theme="snow"
       value={value}
       onChange={changeHandler}
       modules={{ toolbar: TOOLBAR_OPTIONS }}
-      ref = {(node) => quillRef.current = node}
+      ref={node => (quillRef.current = node)}
     />
   );
 }
