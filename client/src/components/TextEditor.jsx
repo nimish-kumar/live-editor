@@ -17,6 +17,7 @@ const TOOLBAR_OPTIONS = [
   ["clean"],
 ];
 export default function TextEditor() {
+  console.log("##env", import.meta.env.PROJ_DEPLOYED_SERVER_URL)
   const quillRef = useRef();
   const { id } = useParams();
   const [socket, setSocket] = useState();
@@ -25,6 +26,10 @@ export default function TextEditor() {
 
   useEffect(() => {
     const socket = io(import.meta.env.PROJ_DEPLOYED_SERVER_URL);
+
+    // socket.on("connect", ()=> {
+    //   console.info("Socket working??", socket.connected)
+    // })
     const editor = quillRef.current.getEditor();
 
     const timer = setInterval(() => {
