@@ -10,6 +10,11 @@ services:
     ports:
       - 27017:27017
     tty: false
+    healthcheck:
+      test: echo 'db.stats().ok' | mongosh localhost:27017/editor-db --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
     networks:
       - live-editor-nw
   
@@ -28,7 +33,8 @@ services:
       - 8001:8001
     tty: true
     depends_on:
-      - live-editor-mongodb
+      live-editor-mongodb:
+        condition: service_healthy
     networks:
       - live-editor-nw
 
