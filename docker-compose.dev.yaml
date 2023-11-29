@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  live-editor-mongodb:
+    container_name: live-editor-mongodb
+    environment:
+      MONGO_INITDB_DATABASE: editor-db
+    image: mongo:7.0.3
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - 27017:27017
+    tty: false
+    healthcheck:
+      test: echo 'db.stats().ok' | mongosh localhost:27017/editor-db --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    networks:
+      - live-editor-nw
+  
+  live-editor-server:
+    container_name: live-editor-server
+    environment:
+      - MODE=development
+      - PROJ_DB_CONNECTION_STRING=mongodb://live-editor-mongodb:27017/editor-db
+      - PROJ_DEPLOYED_FRONTEND_URL=http://live-editor-client:${PROJ_CLIENT_PORT}
+      - PROJ_SERVER_PORT=${PROJ_SERVER_PORT}
+    build: 
+      context: ./
+      dockerfile: Dockerfile.server
+    image: live-editor-server
+    ports:
+      - 8001:8001
+    tty: true
+    depends_on:
+      live-editor-mongodb:
+        condition: service_healthy
+    networks:
+      - live-editor-nw
+
+  live-editor-client:
+    container_name: live-editor-client
+    build:
+      context: ./
+      dockerfile: Dockerfile.client
+    image: live-editor-client
+    tty: true
+    ports:
+      - 5173:5173
+    depends_on:
+      - live-editor-server
+    networks:
+      - live-editor-nw
+
+
+volumes:
+  mongodb_data:
+networks:
+  live-editor-nw:
+    driver: bridge

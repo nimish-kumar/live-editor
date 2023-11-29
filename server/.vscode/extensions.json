@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "steoates.autoimport",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
+    "wix.vscode-import-cost",
+    "ms-vscode.vscode-typescript-next",
+    "yzhang.markdown-all-in-one",
+    "bierner.markdown-preview-github-styles",
+    "esbenp.prettier-vscode",
+  ]
+}
