@@ -10,7 +10,6 @@ services:
       - mongodb_data:/data/db
     ports:
       - 27017:27017
-    tty: false
     healthcheck:
       test: echo 'db.stats().ok' | mongosh localhost:27017/editor-db --quiet
       interval: 10s
@@ -32,7 +31,6 @@ services:
     image: live-editor-server
     ports:
       - 8001:8001
-    tty: true
     depends_on:
       live-editor-mongodb:
         condition: service_healthy
@@ -45,7 +43,6 @@ services:
       context: ./
       dockerfile: Dockerfile.client
     image: live-editor-client
-    tty: true
     ports:
       - 5173:5173
     depends_on:
