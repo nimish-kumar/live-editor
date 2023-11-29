@@ -64,11 +64,16 @@ Make sure you have the following installed:
 
 #### Spinning up containers
 
+<image href="https://raw.githubusercontent.com/nimish-kumar/live-editor/master/demo/images/spinning-up-containers.gif">
+
 #### Testing on local
 They share the same URL, but modifications occur exclusively on one of them.
 
+<image href="https://raw.githubusercontent.com/nimish-kumar/live-editor/master/demo/images/live-editor-run.gif">
 
 #### Cleanup
+
+<image href="https://raw.githubusercontent.com/nimish-kumar/live-editor/master/demo/images/destroying-containers.gif">
 
 ## Contributing
 
