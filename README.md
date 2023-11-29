@@ -13,6 +13,7 @@ This project is a collaborative text editor built using React, Quill, and Socket
     - [Demo](#demo)
       - [Spinning up containers](#spinning-up-containers)
       - [Testing on local](#testing-on-local)
+      - [Cleanup](#cleanup)
   - [Contributing](#contributing)
     - [Prerequisites](#prerequisites-1)
     - [Environment Variables](#environment-variables)
@@ -44,13 +45,17 @@ Make sure you have the following installed:
     ```bash
     docker compose -f docker-compose.dev.yaml up
     ```
+    You can append `-d` flag to run the containers in `detached mode`.
+     ```bash
+    docker compose -f docker-compose.dev.yaml up -d
+    ```
+
 3. Once you see serving message from follow the link to get start.
-4. To halt the containers, terminate the process in the terminal using `Ctrl+C`.
-5. To remove the stopped containers, , ensure you are at the project's root directory and execute the following command:
+4. To halt the containers, terminate the process in the terminal using `Ctrl+C`. To remove the containers, ensure you are at the project's root directory and execute the following command:
     ```bash
     docker compose -f docker-compose.dev.yaml down
     ```
-6. Ensure you clear all Docker images and rebuild them, along with the containers, in case there are code changes. To remove existing images, use the following commands:
+5. Ensure you clear all Docker images and rebuild them, along with the containers, in case there are code changes. To remove existing images, use the following commands:
     ```bash
     docker image remove live-editor-client
     docker image remove live-editor-server
@@ -60,6 +65,10 @@ Make sure you have the following installed:
 #### Spinning up containers
 
 #### Testing on local
+They share the same URL, but modifications occur exclusively on one of them.
+
+
+#### Cleanup
 
 ## Contributing
 
