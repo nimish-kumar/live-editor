@@ -5,24 +5,20 @@ import Document from "./dbDocument.js";
 
 dotenv.config({ path: "../.env" });
 
-console.log(
-  "##--> PROJ_DB_CONNECTION_STRING",
-  process.env.PROJ_DB_CONNECTION_STRING,
-);
-console.log("##--> PROJ_SERVER_PORT", process.env.PROJ_SERVER_PORT);
-console.log(
-  "##--> PROJ_DEPLOYED_FRONTEND_URL",
-  process.env.PROJ_DEPLOYED_FRONTEND_URL,
-);
-
 mongoose
   .connect(process.env.PROJ_DB_CONNECTION_STRING)
   .then(() => console.log("mongodb connected!"))
   .catch(err => console.log("mongodb error", err));
 
-const conn = new Server(Number(process.env.PROJ_SERVER_PORT || "8001"), {
+let CORS_ACCESSIBLE_SITE = process.env.PROJ_DEPLOYED_FRONTEND_URL;
+
+if (process.env.MODE === "development" || process.env.MODE === "dev") {
+  CORS_ACCESSIBLE_SITE = "*";
+}
+
+const conn = new Server(Number(process.env.PROJ_SERVER_PORT), {
   cors: {
-    origin: process.env.PROJ_DEPLOYED_FRONTEND_URL,
+    origin: CORS_ACCESSIBLE_SITE,
     methods: ["GET", "POST"],
   },
 });

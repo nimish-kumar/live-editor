@@ -16,6 +16,7 @@ services:
   live-editor-server:
     container_name: live-editor-server
     environment:
+      - MODE=development
       - PROJ_DB_CONNECTION_STRING=mongodb://live-editor-mongodb:27017/editor-db
       - PROJ_DEPLOYED_FRONTEND_URL=http://live-editor-client:${PROJ_CLIENT_PORT}
       - PROJ_SERVER_PORT=${PROJ_SERVER_PORT}
