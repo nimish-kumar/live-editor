@@ -2,18 +2,33 @@
 
 This project is a collaborative text editor built using React, Quill, and Socket.IO. It allows multiple users to simultaneously edit a document in real-time, with changes instantly reflected across all connected clients. The frontend is developed using Vite with React, providing a fast and efficient development environment.
 
+## Demo
+
+#### Spinning up containers
+
+<image src="https://raw.githubusercontent.com/nimish-kumar/live-editor/master/demo/images/spinning-up-containers.gif" width="667" height="223" />
+
+#### Testing on local
+They share the same URL, but modifications occur exclusively on one of them.
+
+<image src="https://raw.githubusercontent.com/nimish-kumar/live-editor/master/demo/images/live-editor-run.gif" width="950" height="450" />
+
+#### Cleanup
+
+<image src="https://raw.githubusercontent.com/nimish-kumar/live-editor/master/demo/images/destroying-containers.gif" width="667" height="223" />
+
 ## Table of Contents
 
 - [Live Editor with React, Quill, and Socket.IO](#live-editor-with-react-quill-and-socketio)
+  - [Demo](#demo)
+      - [Spinning up containers](#spinning-up-containers)
+      - [Testing on local](#testing-on-local)
+      - [Cleanup](#cleanup)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Usage Guidelines](#usage-guidelines)
-    - [Demo](#demo)
-      - [Spinning up containers](#spinning-up-containers)
-      - [Testing on local](#testing-on-local)
-      - [Cleanup](#cleanup)
   - [Contributing](#contributing)
     - [Prerequisites](#prerequisites-1)
     - [Environment Variables](#environment-variables)
@@ -50,7 +65,7 @@ Make sure you have the following installed:
     docker compose -f docker-compose.dev.yaml up -d
     ```
 
-3. Once you see serving message from follow the link to get start.
+3. Once you see serving message, follow the link to get started.
 4. To halt the containers, terminate the process in the terminal using `Ctrl+C`. To remove the containers, ensure you are at the project's root directory and execute the following command:
     ```bash
     docker compose -f docker-compose.dev.yaml down
@@ -60,20 +75,6 @@ Make sure you have the following installed:
     docker image remove live-editor-client
     docker image remove live-editor-server
     ```
-### Demo
-
-#### Spinning up containers
-
-<image src="https://raw.githubusercontent.com/nimish-kumar/live-editor/master/demo/images/spinning-up-containers.gif" width="667" height="223" />
-
-#### Testing on local
-They share the same URL, but modifications occur exclusively on one of them.
-
-<image src="https://raw.githubusercontent.com/nimish-kumar/live-editor/master/demo/images/live-editor-run.gif" width="950" height="450" />
-
-#### Cleanup
-
-<image src="https://raw.githubusercontent.com/nimish-kumar/live-editor/master/demo/images/destroying-containers.gif" width="667" height="223" />
 
 ## Contributing
 
