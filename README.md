@@ -50,7 +50,7 @@ Make sure you have the following installed:
     docker compose -f docker-compose.dev.yaml up -d
     ```
 
-3. Once you see serving message from follow the link to get start.
+3. Once you see serving message, follow the link to get started.
 4. To halt the containers, terminate the process in the terminal using `Ctrl+C`. To remove the containers, ensure you are at the project's root directory and execute the following command:
     ```bash
     docker compose -f docker-compose.dev.yaml down
