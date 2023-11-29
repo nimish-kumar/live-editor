@@ -2,6 +2,7 @@ version: '3.8'
 services:
   live-editor-mongodb:
     container_name: live-editor-mongodb
+    command: mongod --quiet --logpath /dev/null 
     environment:
       MONGO_INITDB_DATABASE: editor-db
     image: mongo:7.0.3

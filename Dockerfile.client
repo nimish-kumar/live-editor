@@ -6,10 +6,7 @@ COPY ./client /app
 COPY .env .env
 WORKDIR /app
 RUN pnpm i -g serve
-
 ENV PROJ_CLIENT_PORT=5173
-ENV PROJ_SERVER_PORT=8001
-
 
 FROM base AS dev-deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
